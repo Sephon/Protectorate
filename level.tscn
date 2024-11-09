@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://ba8jqe3vtll0w"]
+[gd_scene load_steps=11 format=3 uid="uid://ba8jqe3vtll0w"]
 
 [ext_resource type="Script" path="res://player_character.gd" id="1_3nwu7"]
 [ext_resource type="Script" path="res://level.gd" id="1_47bb8"]
 [ext_resource type="Script" path="res://game_camera.gd" id="2_3h88l"]
+[ext_resource type="Script" path="res://bullet_manager.gd" id="4_deib4"]
+[ext_resource type="PackedScene" uid="uid://kemdfkaboj8a" path="res://bullet_3d_scene.tscn" id="5_pivub"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6sejg"]
 
@@ -50,3 +52,7 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0, 8, 7)
 script = ExtResource("2_3h88l")
 player = NodePath("../PlayerCharacter")
+
+[node name="BulletManager" type="Node3D" parent="."]
+script = ExtResource("4_deib4")
+bullet_scene = ExtResource("5_pivub")

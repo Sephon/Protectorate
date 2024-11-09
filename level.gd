@@ -12,7 +12,7 @@ var ray_target = Vector3()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	var mouse_position = get_viewport().get_mouse_position()
-	print("Mouse position: ", mouse_position)
+	#print("Mouse position: ", mouse_position)
 	
 	
 	ray_origin = $GameCamera.project_ray_origin(mouse_position)
@@ -26,7 +26,8 @@ func _process(delta: float) -> void:
 	
 	var space_state = get_world_3d().direct_space_state
 	var intersection = space_state.intersect_ray(ray_params)
+	var offset = Vector3(0,1,0)
 	if not intersection.is_empty():
-		var pos = intersection.position
+		var pos = intersection.position + offset
 		$PlayerCharacter.look_at(pos, Vector3.UP)
 	
