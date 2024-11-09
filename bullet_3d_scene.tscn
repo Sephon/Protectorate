@@ -1,6 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://kemdfkaboj8a"]
+[gd_scene load_steps=9 format=3 uid="uid://kemdfkaboj8a"]
 
 [ext_resource type="Script" path="res://bullet_3d_scene.gd" id="1_jxae2"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_k0gs6"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_b4guo"]
 
@@ -16,10 +18,12 @@ albedo_color = Color(0, 0, 1, 1)
 [sub_resource type="Skin" id="Skin_4pmhv"]
 
 [node name="Bullet3DScene" type="RigidBody3D"]
+mass = 0.001
+physics_material_override = SubResource("PhysicsMaterial_k0gs6")
+gravity_scale = 0.001
 script = ExtResource("1_jxae2")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 mesh = SubResource("SphereMesh_b4guo")
 surface_material_override/0 = SubResource("StandardMaterial3D_bcigi")
 
@@ -27,8 +31,10 @@ surface_material_override/0 = SubResource("StandardMaterial3D_bcigi")
 shape = SubResource("SphereShape3D_mp0bx")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="MeshInstance3D"]
-lifetime = 0.25
+amount = 10
+lifetime = 0.3
 trail_enabled = true
+trail_lifetime = 0.5
 process_material = SubResource("ParticleProcessMaterial_vqtu2")
 draw_pass_1 = SubResource("SphereMesh_a30sq")
 draw_skin = SubResource("Skin_4pmhv")

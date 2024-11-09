@@ -16,7 +16,6 @@ func _process(delta: float) -> void:
 	
 	
 	ray_origin = $GameCamera.project_ray_origin(mouse_position)
-	#print("ray_origin: ", ray_origin)
 	
 	ray_target = ray_origin + $GameCamera.project_ray_normal(mouse_position) * 2000
 	

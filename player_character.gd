@@ -4,32 +4,50 @@ extends CharacterBody3D
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
-@export var bullet_speed: float = 500.0  # Speed of the bullet
-
-@onready var bullet_manager = get_node("/root/bullet_manager")  # Adjust the path if needed
+@export var bullet_speed: float = 1000.0  # Speed of the bullet
+@export var bullet_source: NodePath
+@export var character_camera: Camera3D
 
 func shoot_bullet():
 	print("Shooting bullet")
 	# Get the mouse position in world space
 	var camera = get_viewport().get_camera_3d()
-	var ray_origin = camera.project_ray_origin(get_viewport().get_mouse_position())
-	var ray_direction = camera.project_ray_normal(get_viewport().get_mouse_position())
-	var ray_target = ray_origin + ray_direction * 1000  # Extend the ray into the distance
-
-	# Calculate the direction from the player to the target
+	#var ray_origin = camera.project_ray_origin(get_viewport().get_mouse_position())
+	#var ray_direction = camera.project_ray_normal(get_viewport().get_mouse_position())
+	#var ray_target = ray_origin + ray_direction * 1000  # Extend the ray into the distance
+	#var target_direction = (ray_target - global_transform.origin).normalized()
+	
+	###
+	var mouse_position = get_viewport().get_mouse_position()
+	var ray_origin = character_camera.project_ray_origin(mouse_position)	
+	var ray_target = ray_origin + character_camera.project_ray_normal(mouse_position) * 2000	
+	var ray_params = PhysicsRayQueryParameters3D.new()
+	ray_params.from = ray_origin
+	ray_params.to = ray_target
 	var target_direction = (ray_target - global_transform.origin).normalized()
+	var space_state = get_world_3d().direct_space_state
+	var intersection = space_state.intersect_ray(ray_params)
+	var offset = Vector3(0,1,0)
+	if not intersection.is_empty():
+		var pos = intersection.position + offset
+		intersection = pos
+		#$PlayerCharacter.look_at(pos, Vector3.UP)
+	###
+	
 
-	# Retrieve a bullet from the BulletManager
-	var bullet = bullet_manager.get_bullet()
+	var manager = get_node(bullet_source) as Node3D	
+	var bullet = manager.get_bullet()
+
 	if bullet:
 		# Set the bullet's position to the player's position
-		bullet.global_transform.origin = global_transform.origin
 
-		# Apply a velocity to the bullet to make it move in the calculated direction
+		get_tree().root.add_child(bullet)
+		bullet.global_transform.origin = global_transform.origin
+		bullet.gravity_scale = 0
 		bullet.linear_velocity = target_direction * bullet_speed
+		bullet.visible = true
 
 		# Make the bullet visible 
-		bullet.visible = true
 
 
 func _physics_process(delta: float) -> void:

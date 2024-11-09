@@ -7,22 +7,26 @@ extends Node3D  # or `Spatial` if you are using Godot 4.1+
 var bullet_pool: Array[RigidBody3D] = []
 
 func _ready():
-	# Preload bullets into the pool without adding them as children
+ # Preload bullets into the pool without freeing them
 	for i in range(pool_size):
 		var bullet = bullet_scene.instantiate() as RigidBody3D
 		bullet_pool.append(bullet)
-		bullet.queue_free()  # Free initially; they’ll be instanced on demand
+		bullet.visible = false  # Initially hide the bullets		
 
 func get_bullet() -> RigidBody3D:
 	# Retrieve a bullet from the pool, or create a new one if the pool is empty
 	var bullet: RigidBody3D
+	
+		
 	if bullet_pool.size() > 0:
 		bullet = bullet_pool.pop_back()
 	else:
 		bullet = bullet_scene.instantiate() as RigidBody3D
+		#add_child(bullet)  # Add to the scene tree if created anew
 
 	# Add bullet to the root of the scene tree (or a designated "bullets" layer)
-	get_tree().root.add_child(bullet)
+	#bullet.visible = true
+	#get_tree().root.add_child(bullet)
 	return bullet
 
 func return_bullet(bullet: RigidBody3D):
