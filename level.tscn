@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://ba8jqe3vtll0w"]
+[gd_scene load_steps=9 format=3 uid="uid://ba8jqe3vtll0w"]
 
 [ext_resource type="Script" path="res://player_character.gd" id="1_3nwu7"]
+[ext_resource type="Script" path="res://level.gd" id="1_47bb8"]
 [ext_resource type="Script" path="res://game_camera.gd" id="2_3h88l"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6sejg"]
@@ -16,6 +17,7 @@ albedo_color = Color(1, 1, 0, 1)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_eq0b2"]
 
 [node name="Level" type="Node3D"]
+script = ExtResource("1_47bb8")
 
 [node name="Ground" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -1, 0)
@@ -28,7 +30,7 @@ script = ExtResource("1_3nwu7")
 metadata/_edit_group_ = true
 
 [node name="Eyes" type="MeshInstance3D" parent="PlayerCharacter"]
-transform = Transform3D(0.4, 0, 0, 0, 0.2, 0, 0, 0, 1, 0.3, 0.4, 0)
+transform = Transform3D(0.72, 0, 0, 0, 0.2, 0, 0, 0, 0.81, 1.49012e-08, 0.4, -0.2)
 mesh = SubResource("BoxMesh_6sejg")
 surface_material_override/0 = SubResource("StandardMaterial3D_dctcx")
 
@@ -40,10 +42,11 @@ metadata/_edit_group_ = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerCharacter"]
 shape = SubResource("CapsuleShape3D_eq0b2")
 
-[node name="GameCamera" type="Camera3D" parent="PlayerCharacter"]
-transform = Transform3D(1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0, 7.32818, 4)
-script = ExtResource("2_3h88l")
-
 [node name="SunLight" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.790817, -0.281604, -0.543421, 0.607275, 0.471733, 0.639285, 0.0763241, -0.835564, 0.544066, -2, 3.19637, 6)
 shadow_enabled = true
+
+[node name="GameCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0, 8, 7)
+script = ExtResource("2_3h88l")
+player = NodePath("../PlayerCharacter")

@@ -5,6 +5,8 @@ extends Camera3D
 @export var max_zoom: float = 20.0   # Maximum zoom distance
 
 var zoom_distance: float = 10.0
+@export var player: NodePath  # Reference to the player node
+var offset: Vector3 = Vector3(0, 0, 5)  # Adjust the position relative to the player
 
 
 # Called when the node enters the scene tree for the first time.
@@ -30,7 +32,11 @@ func _input(event):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if player:
+		# Get the player position and add offset
+		var player_position = get_node(player).global_transform.origin
+		global_transform.origin.z = player_position.z + offset.z
+		global_transform.origin.x = player_position.x + offset.x
 	
 func update_camera_position():
 	# Assuming the camera is positioned behind the character, along the Z-axis
