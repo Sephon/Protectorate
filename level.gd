@@ -12,11 +12,8 @@ var ray_target = Vector3()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	var mouse_position = get_viewport().get_mouse_position()
-	#print("Mouse position: ", mouse_position)
-	
-	
-	ray_origin = $GameCamera.project_ray_origin(mouse_position)
-	
+		
+	ray_origin = $GameCamera.project_ray_origin(mouse_position)	
 	ray_target = ray_origin + $GameCamera.project_ray_normal(mouse_position) * 2000
 	
 	var ray_params = PhysicsRayQueryParameters3D.new()

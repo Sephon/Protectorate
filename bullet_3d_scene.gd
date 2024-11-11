@@ -20,8 +20,8 @@ func _physics_process(delta):
 	global_transform.origin += direction * speed * delta
 
 	# Optionally, check if offscreen or collided to return bullet early
-	if is_offscreen():
-		bullet_manager.return_bullet(self)
+	#if is_offscreen():
+		#bullet_manager.return_bullet(self)
 
 func is_offscreen() -> bool:
 	print("Bullet is offscreen")

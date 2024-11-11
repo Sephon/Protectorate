@@ -34,8 +34,10 @@ size = Vector3(17, 1, 17)
 [node name="PlayerCharacter" type="CharacterBody3D" parent="." node_paths=PackedStringArray("character_camera")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.671824, 0)
 script = ExtResource("1_3nwu7")
+bullet_speed = null
 bullet_source = NodePath("../BulletManager")
 character_camera = NodePath("../GameCamera")
+autofire_delay = null
 metadata/_edit_group_ = true
 
 [node name="Eyes" type="MeshInstance3D" parent="PlayerCharacter"]
